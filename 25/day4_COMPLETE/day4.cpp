@@ -40,6 +40,8 @@ bool check_surrounding(const vector<vector<int>>& matrix, size_t row, size_t col
 	return count < 4;
 }
 
+
+
 int main() {
 	string file_name = "input.txt";
 	string line;
@@ -49,13 +51,21 @@ int main() {
 		input.push_back(line);
 	}
 	vector<vector<int>> matrix = string_to_matrix(input);
+
+	vector<vector<int>> tmp_m;
 	int rolls = 0;
-	for (size_t i = 0; i < matrix.size(); ++i) {
-		for (size_t j = 0; j < matrix[i].size(); ++j) {
-			if (matrix[i][j] == 1 && check_surrounding(matrix, i, j))
-				++rolls;
+	while (tmp_m != matrix) {
+		tmp_m = matrix;
+		for (size_t i = 0; i < matrix.size(); ++i) {
+			for (size_t j = 0; j < matrix[i].size(); ++j) {
+				if (matrix[i][j] == 1 && check_surrounding(matrix, i, j)) {
+					matrix[i][j] = 0;
+					++rolls;
+				}
+			}
 		}
 	}
+
 	cout << rolls << endl;
 	return 0;
 }
